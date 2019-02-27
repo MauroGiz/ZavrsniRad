@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.Sql;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace ProbaBaza
 {
@@ -21,13 +20,32 @@ namespace ProbaBaza
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string connectionString;
-            SqlConnection cnn;
-            connectionString = @"Data Source=|DataDirectory|\Database1.mdf";
-                cnn = new SqlConnection(connectionString);
-            cnn.Open();
-            MessageBox.Show("Connection open!");
-            cnn.Close();
+            MySqlConnection connection;
+
+            string server = "portmap.io";
+            string port = "61974";
+            string database = "parking";
+            string user = "test";
+            string password = "123";
+
+            string connectionString =
+                "SERVER=" + server + ";" +
+                "PORT=" + port + ";" +
+                "DATABASE=" + database + ";" +
+                "UID=" + user + ";" +
+                "PASSWORD=" + password + ";";
+
+            connection = new MySqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+                MessageBox.Show("Uspjesno povezivanje na bazu podataka.");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Neuspjelo povezivanje na bazu.");
+            }
         }
     }
 }
